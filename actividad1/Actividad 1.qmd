@@ -1,0 +1,64 @@
+---
+title: "Introducción al modelo lineal"
+author: "María Grela"
+format: pdf
+editor: visual
+geometry: margin=0.75in
+---
+
+## Ejercicios iniciales
+
+1.  Con los datos de los buitres leonados realizar el siguiente proceso:
+    -   Dibujar la nube de puntos con la instrucción **plot().**
+    -   Añadir la recta de regresión con la instrucción **abline().**
+    -   Dibujar el gráfico de residuos vs. valores ajustados con la función **plot()** aplicada al objeto **lm**.
+    -   Añadir al gráfico de dispersión del primer apartado la curva de regresión parabólica.
+
+```{r datos-ejercicio}
+heartbpm <- c(47.53, 48.27, 49.51, 51.09, 52.57, 54.30, 54.25, 54.45, 57.95, 
+              60.92, 61.91, 77.92, 82.07, 82.95, 83.94, 86.96, 90.42, 92.93, 
+              100.05)
+metabol <- c(6.15, 6.31, 6.43, 6.78, 6.86, 6.90, 7.37, 7.41, 8.24, 9.22, 
+             8.16, 12.61, 15.26, 13.09, 14.59, 17.35, 18.57, 19.00, 20.70)
+vulture <- data.frame(heartbpm, metabol)
+```
+
+```{r apartados-1-2, out.width="90%", fig.align='center'}
+plot(heartbpm, metabol, xlab="Frecuencia cardíaca", ylab="Tasa metabólica")
+abline(lm(metabol ~ heartbpm, data=vulture))
+```
+
+```{r apartado-3, out.width="90%", fig.align='center'}
+lm <- lm(metabol ~ heartbpm, data=vulture)
+residuos <- lm$residuals
+
+plot(heartbpm, residuos, 
+     xlab="Valores ajustados",
+     ylab="Residuos",
+     main="Residuos vs. valores ajustados")
+abline(0,0)
+
+```
+
+```{r apartado-4, out.width="90%", fig.align='center'}
+lm2 <- lm(metabol ~ heartbpm + I(heartbpm^2), data=vulture)
+# I isolates or insulates the contents of I( ... ) from the gaze of R's formula
+# parsing code. It allows the standard R operators to work as they would if you
+# used them outside of a formula, rather than being treated as special formula
+# operators.
+
+coeficientes <- coef(lm2)
+
+plot(heartbpm, metabol, 
+     xlab="Frecuencia cardíaca",
+     ylab="Tasa metabólica")
+curve(coeficientes[1] + coeficientes[2]*x + coeficientes[3]*(x**2), 
+      add=TRUE)
+
+```
+
+2.  Con los datos de la tensión arterial sistólica y la edad de los 69 pacientes que podemos encontrar en la web de [Fisterra](https://www.fisterra.com/formacion/metodologia-investigacion/tecnicas-regresion-regresion-lineal-simple/), calcular los coeficientes de regresión de la recta mínimo cuadrática.
+
+```{r}
+
+```

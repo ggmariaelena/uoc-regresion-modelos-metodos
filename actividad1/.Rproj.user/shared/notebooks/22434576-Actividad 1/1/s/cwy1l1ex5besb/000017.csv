@@ -1,0 +1,7 @@
+"0","ls <- lsfit(heartbpm, metabol)"
+"0","residuos <- resid(ls)"
+"0",""
+"0","plot(vulture$heartbpm, residuos, "
+"0","     xlab=""Frecuencia cardíaca"","
+"0","     ylab=""Residuos"","
+"0","     main=""Residuos vs. valores ajustados"")"
